@@ -22,6 +22,11 @@ try {
 let mongodInstance = null;
 
 const connectDB = async () => {
+  // If already connected, reuse existing connection (vital for serverless cold/warm starts on Vercel)
+  if (mongoose.connection.readyState >= 1) {
+    return;
+  }
+
   const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/student_management';
 
   try {

@@ -36,6 +36,18 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Ensure DB is connected for API requests (vital for Vercel serverless cold starts)
+app.use(async (req, res, next) => {
+  if (req.originalUrl.startsWith('/api') && req.originalUrl !== '/api/health') {
+    try {
+      await connectDB();
+    } catch (err) {
+      console.error('[DB Middleware Error]:', err.message);
+    }
+  }
+  next();
+});
+
 // Mount API Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/profile', require('./routes/profileRoutes'));
@@ -45,7 +57,7 @@ app.use('/api/dashboard', require('./routes/dashboardRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 
 // Serve frontend static build in production (single-service deployment)
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && !process.env.VERCEL) {
   const clientDistPath = path.resolve(__dirname, '../client/dist');
   app.use(express.static(clientDistPath));
 
@@ -61,8 +73,8 @@ if (process.env.NODE_ENV === 'production') {
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-// Connect DB and listen only if not in testing mode
-if (process.env.NODE_ENV !== 'test') {
+// Connect DB and listen only if not in testing mode and not on Vercel
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
   connectDB();
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
