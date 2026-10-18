@@ -44,10 +44,22 @@ const Home = () => {
           <div className="collapse navbar-collapse" id="homeNavbar">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
               <li className="nav-item">
-                <a className="nav-link active" href="#hero">Home</a>
+                <button
+                  type="button"
+                  className="nav-link btn btn-link active text-decoration-none border-0 bg-transparent text-start"
+                  onClick={() => document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  Home
+                </button>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#features">Capabilities</a>
+                <button
+                  type="button"
+                  className="nav-link btn btn-link text-decoration-none border-0 bg-transparent text-start"
+                  onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  Capabilities
+                </button>
               </li>
             </ul>
 
