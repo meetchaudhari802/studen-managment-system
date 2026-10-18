@@ -1,0 +1,26 @@
+{
+  "name": "edutrack-student-management-system",
+  "version": "1.0.0",
+  "description": "EduTrack - College PBL Student Management System (MERN Stack)",
+  "scripts": {
+    "render-build": "npm --prefix server install && npm --prefix client install && npm --prefix client run build",
+    "build": "npm --prefix client install && npm --prefix client run build",
+    "start": "npm --prefix server start",
+    "server": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "seed": "npm --prefix server run seed",
+    "create-admin": "npm --prefix server run create-admin",
+    "test": "npm --prefix server test"
+  },
+  "keywords": [
+    "mern",
+    "react",
+    "vite",
+    "express",
+    "mongodb",
+    "student-management-system",
+    "pbl"
+  ],
+  "author": "PBL Student Team",
+  "license": "ISC"
+}
